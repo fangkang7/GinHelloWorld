@@ -1,0 +1,23 @@
+{
+  "app_name": "kaktest",
+  "app_mode": "debug",
+  "app_host": "127.0.0.1",
+  "app_port": "8089",
+  "sms": {
+    "sign_name": "线上餐厅",
+    "template_code": "SMS_176525619",
+    "app_key": "123456",
+    "app_secret": "456",
+    "region_id": "147"
+  },
+  "database": {
+    "drive": "mysql",
+    "user": "root",
+    "password": "root",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "db_name": "test",
+    "charset": "utf8",
+    "show_sql": true
+  }
+}
