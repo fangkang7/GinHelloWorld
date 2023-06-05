@@ -12,6 +12,13 @@ type MemberController struct {
 
 func (mc *MemberController) Route(engine *gin.Engine) {
 	engine.GET("/api/sendcode", mc.sendSmsCode)
+	// 参数
+	/**
+	{
+	    "phone": "123456",
+	    "code": "304955"
+	}
+	*/
 	engine.POST("/api/login", mc.login)
 }
 
