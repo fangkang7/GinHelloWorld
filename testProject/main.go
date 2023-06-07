@@ -12,7 +12,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-
 	_, err = tool.OrmEngine(cfg)
 	if err != nil {
 		fmt.Println(err.Error())

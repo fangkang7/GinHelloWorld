@@ -20,8 +20,27 @@ func (mc *MemberController) Route(engine *gin.Engine) {
 	}
 	*/
 	engine.POST("/api/login", mc.login)
+	engine.GET("/api/captcha", mc.captcha)
 }
 
+// 生成验证码
+func (mc *MemberController) captcha(ctx *gin.Context) {
+	captcha, s, err := tool.MakeCaptcha()
+	if err != nil {
+		// 处理错误
+		tool.Failed(ctx, "验证码生成失败")
+		return
+	}
+	captchaResult := tool.CaptchaResult{
+		Id:         captcha,
+		Base64Blob: s,
+	}
+	tool.Success(ctx, map[string]interface{}{
+		"captcha_result": captchaResult,
+	})
+}
+
+// 发送短信二维码
 func (mc *MemberController) sendSmsCode(context *gin.Context) {
 	phone, exist := context.GetQuery("phone")
 
