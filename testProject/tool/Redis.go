@@ -1,6 +1,8 @@
 package tool
 
-import "github.com/go-redis/redis"
+import (
+	"github.com/go-redis/redis"
+)
 
 type RedisStore struct {
 	*redis.Client
