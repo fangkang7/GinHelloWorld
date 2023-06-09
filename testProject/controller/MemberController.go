@@ -25,16 +25,21 @@ func (mc *MemberController) Route(engine *gin.Engine) {
 
 // 生成验证码
 func (mc *MemberController) captcha(ctx *gin.Context) {
-	captcha, s, err := tool.MakeCaptcha()
-	if err != nil {
-		// 处理错误
-		tool.Failed(ctx, "验证码生成失败")
-		return
-	}
-	captchaResult := tool.CaptchaResult{
-		Id:         captcha,
-		Base64Blob: s,
-	}
+	//captcha, s, err := tool.MakeCaptcha()
+	//if err != nil {
+	//	// 处理错误
+	//	tool.Failed(ctx, "验证码生成失败")
+	//	return
+	//}
+	//captchaResult := tool.CaptchaResult{
+	//	Id:         captcha,
+	//	Base64Blob: s,
+	//}
+	//tool.Success(ctx, map[string]interface{}{
+	//	"captcha_result": captchaResult,
+	//})
+
+	captchaResult := tool.MakeCaptcha()
 	tool.Success(ctx, map[string]interface{}{
 		"captcha_result": captchaResult,
 	})

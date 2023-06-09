@@ -1,7 +1,6 @@
 package tool
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/mojocn/base64Captcha"
 	"image/color"
 )
@@ -13,12 +12,7 @@ type CaptchaResult struct {
 }
 
 // 生成验证码
-func GenerateCaptcha(ctx *gin.Context) {
-	//captcha, _, _ := makeCaptcha()
-	//fmt.
-}
-
-func MakeCaptcha() (id, b64s string, err error) {
+func MakeCaptcha() *CaptchaResult {
 	// 设置自带的 store（可以配置成redis）
 	var store = base64Captcha.DefaultMemStore
 	var driver base64Captcha.Driver
@@ -38,7 +32,16 @@ func MakeCaptcha() (id, b64s string, err error) {
 	//创建 Captcha
 	captcha := base64Captcha.NewCaptcha(driver, store)
 	//Generate 生成随机 id、base64 图像字符串
-	id, b64s, err = captcha.Generate()
+	generate, s, err := captcha.Generate()
 
-	return id, b64s, err
+	if err != nil {
+		return nil
+	}
+
+	result := &CaptchaResult{
+		Id:         generate,
+		Base64Blob: s,
+	}
+
+	return result
 }
