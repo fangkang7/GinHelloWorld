@@ -37,9 +37,8 @@ type OrmConfig struct {
 
 type RedisConfig struct {
 	Addr     string `json:"addr"`
-	Port     int64  `json:"port"`
 	Password string `json:"password"`
-	Db       int64  `json:"db"`
+	Db       int    `json:"db"`
 }
 
 var _cfg *Config = nil

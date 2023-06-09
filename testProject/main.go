@@ -17,6 +17,10 @@ func main() {
 		fmt.Println(err.Error())
 		return
 	}
+
+	// 初始化redis
+	tool.InitRedisStore()
+
 	app := gin.Default()
 	registerRouter(app)
 	app.Run(cfg.AppHost + ":" + cfg.AppPort)
