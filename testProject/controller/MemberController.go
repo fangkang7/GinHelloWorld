@@ -12,13 +12,7 @@ type MemberController struct {
 
 func (mc *MemberController) Route(engine *gin.Engine) {
 	engine.GET("/api/sendcode", mc.sendSmsCode)
-	// 参数
-	/**
-	{
-	    "phone": "123456",
-	    "code": "304955"
-	}
-	*/
+	// 手机号、验证码登录
 	engine.POST("/api/login", mc.login)
 	// 生成验证码
 	engine.GET("/api/captcha", mc.captcha)
@@ -29,7 +23,7 @@ func (mc *MemberController) Route(engine *gin.Engine) {
 func (mc *MemberController) nameLogin(ctx *gin.Context) {
 	// 参数解析
 	var loginParam param.LoginParam
-	println(ctx.Request.Body)
+
 	err := tool.Decode(ctx.Request.Body, &loginParam)
 	if err != nil {
 		tool.Failed(ctx, "参数解析失败")
@@ -38,7 +32,8 @@ func (mc *MemberController) nameLogin(ctx *gin.Context) {
 
 	// 用户登录
 	ms := service.MemberService{}
-	memberInfo := ms.Login(loginParam.Name, loginParam.Password)
+	serviceParam := service.LoginParam{Name: loginParam.Name, Password: loginParam.Password}
+	memberInfo := ms.Login(serviceParam)
 	if memberInfo.Id == 0 {
 		tool.Failed(ctx, "账号密码不存在")
 		return

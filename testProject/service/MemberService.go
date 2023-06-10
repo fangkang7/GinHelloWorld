@@ -19,9 +19,9 @@ type LoginParam struct {
 }
 
 // 用户登录
-func (ms *MemberService) Login(name string, password string) *model.Member {
+func (ms *MemberService) Login(loginParam LoginParam) *model.Member {
 	md := dao.MemberDao{tool.DbEngine}
-	member := md.Query(name, password)
+	member := md.Query(loginParam.Name, loginParam.Password)
 
 	return member
 }
