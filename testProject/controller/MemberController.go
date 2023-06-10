@@ -20,7 +20,31 @@ func (mc *MemberController) Route(engine *gin.Engine) {
 	}
 	*/
 	engine.POST("/api/login", mc.login)
+	// 生成验证码
 	engine.GET("/api/captcha", mc.captcha)
+	engine.POST("/api/nameLogin", mc.nameLogin)
+}
+
+// 用户账号密码登录
+func (mc *MemberController) nameLogin(ctx *gin.Context) {
+	// 参数解析
+	var loginParam param.LoginParam
+	println(ctx.Request.Body)
+	err := tool.Decode(ctx.Request.Body, &loginParam)
+	if err != nil {
+		tool.Failed(ctx, "参数解析失败")
+		return
+	}
+
+	// 用户登录
+	ms := service.MemberService{}
+	memberInfo := ms.Login(loginParam.Name, loginParam.Password)
+	if memberInfo.Id == 0 {
+		tool.Failed(ctx, "账号密码不存在")
+		return
+	}
+
+	tool.Success(ctx, memberInfo)
 }
 
 // 生成验证码

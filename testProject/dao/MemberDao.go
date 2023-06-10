@@ -10,6 +10,18 @@ type MemberDao struct {
 	*tool.Orm
 }
 
+// 用户使用账号密码进行登录
+func (md *MemberDao) Query(name string, password string) *model.Member {
+	var member model.Member
+
+	_, err := md.Where(" user_name = ? and password = ? ", name, password).Get(&member)
+	if err != nil {
+		return nil
+	}
+
+	return &member
+}
+
 // 验证手机号和验证码是否存在
 func (md *MemberDao) ValidateSmsCode(phone string, code string) *model.SmsCode {
 	var sms model.SmsCode

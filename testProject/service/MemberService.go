@@ -13,6 +13,19 @@ import (
 type MemberService struct {
 }
 
+type LoginParam struct {
+	Name     string
+	Password string
+}
+
+// 用户登录
+func (ms *MemberService) Login(name string, password string) *model.Member {
+	md := dao.MemberDao{tool.DbEngine}
+	member := md.Query(name, password)
+
+	return member
+}
+
 func (ms *MemberService) SmsLogin(param param.SmsLoginParam) *model.Member {
 	// 验证手机号 + 验证码是否正确
 	md := &dao.MemberDao{tool.DbEngine}
