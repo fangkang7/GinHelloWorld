@@ -19,5 +19,10 @@
     "db_name": "test",
     "charset": "utf8",
     "show_sql": true
+  },
+  "redis_config": {
+    "addr": "127.0.0.1:6379",
+    "password": "",
+    "db": 0
   }
 }

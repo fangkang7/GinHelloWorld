@@ -2,7 +2,6 @@ package tool
 
 import (
 	"GinHelloWorld/testProject/model"
-	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/xormplus/xorm"
 )
@@ -15,7 +14,6 @@ type Orm struct {
 
 func OrmEngine(cfg *Config) (*Orm, error) {
 	database := cfg.Database
-	fmt.Println(database)
 	conn := database.User + ":" + database.Password + "@tcp(" + database.Host + ":" + database.Port + ")/" + database.DbName
 	engine, err := xorm.NewEngine(database.Drive, conn)
 	if err != nil {

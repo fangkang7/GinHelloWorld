@@ -16,6 +16,8 @@ func Success(ctx *gin.Context, v interface{}) {
 		"msg":  "成功",
 		"data": v,
 	})
+
+	return
 }
 
 func Failed(ctx *gin.Context, v interface{}) {
@@ -23,4 +25,6 @@ func Failed(ctx *gin.Context, v interface{}) {
 		"code": FAILED,
 		"msg":  v,
 	})
+
+	return
 }

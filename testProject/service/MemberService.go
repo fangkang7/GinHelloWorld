@@ -13,13 +13,43 @@ import (
 type MemberService struct {
 }
 
+type LoginParam struct {
+	Name     string
+	Password string
+}
+
+// 用户登录
+func (ms *MemberService) Login(loginParam LoginParam) *model.Member {
+	md := dao.MemberDao{tool.DbEngine}
+	member := md.Query(loginParam.Name, loginParam.Password)
+
+	return member
+}
+
 func (ms *MemberService) SmsLogin(param param.SmsLoginParam) *model.Member {
-	md := &dao.MemberDao{}
+	// 验证手机号 + 验证码是否正确
+	md := &dao.MemberDao{tool.DbEngine}
 	sms := md.ValidateSmsCode(param.Phone, param.Code)
 	if sms.Id == 0 {
 		return nil
 	}
-	return nil
+
+	// 根据手机号member表中查询记录
+	member, _ := md.QueryByPhone(param.Phone)
+	if member.Id != 0 {
+		return member
+	}
+
+	// 新创建一个member记录，并保存
+	user := model.Member{
+		UserName:     param.Phone,
+		Mobile:       param.Phone,
+		RegisterTime: time.Now().Unix(),
+	}
+
+	user.Id = md.InsertMember(user)
+
+	return &user
 }
 
 func (ms *MemberService) SendCode(phone string) bool {
